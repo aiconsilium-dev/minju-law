@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>기업회생센터 - 법무법인 민주</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.recovery-hero{height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.06)}
+.recovery-hero h1{font-size:clamp(48px,8vw,100px);font-weight:100;letter-spacing:0.05em;line-height:1.1}
+.recovery-hero h1 strong{font-weight:700;color:#ff4d4d}
+.recovery-hero p{font-size:16px;color:#888;margin-top:20px;max-width:600px;line-height:1.8}
+
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.process-step{border:1px solid rgba(255,255,255,0.08);padding:40px 28px;position:relative;transition:all 0.4s}
+.process-step:hover{border-color:rgba(255,255,255,0.2)}
+.process-num{font-size:48px;font-weight:100;color:#ff4d4d;margin-bottom:16px;line-height:1}
+.process-title{font-size:18px;font-weight:600;margin-bottom:10px}
+.process-desc{font-size:13px;color:#666;line-height:1.7}
+.process-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.15);font-size:20px}
+
+.service-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.service-card{border:1px solid rgba(0,0,0,0.08);padding:36px 28px;transition:all 0.3s}
+.service-card:hover{border-color:rgba(0,0,0,0.2);transform:translateY(-2px)}
+.service-card .num{font-size:32px;font-weight:100;color:#ff4d4d;margin-bottom:12px}
+.service-card h3{font-size:17px;font-weight:700;margin-bottom:8px;color:#111}
+.service-card p{font-size:13px;color:#666;line-height:1.7}
+.service-card .tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.service-card .tag{font-size:11px;padding:3px 10px;border-radius:100px;border:1px solid rgba(0,0,0,0.1);color:#888}
+
+.stat-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
+.stat-banner-item{padding:48px 32px;text-align:center;border-right:1px solid rgba(255,255,255,0.08)}
+.stat-banner-item:last-child{border-right:none}
+.stat-banner-num{font-size:42px;font-weight:200;color:#fff;letter-spacing:-0.02em}
+.stat-banner-label{font-size:12px;color:#666;margin-top:8px}
+
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid rgba(0,0,0,0.08);padding:24px 0;cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:600;color:#111}
+.faq-q .arrow{transition:transform 0.3s;color:#888}
+.faq-item.open .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s;font-size:14px;color:#666;line-height:1.8}
+.faq-item.open .faq-a{max-height:300px;padding-top:14px}
+
+.cta-recovery{text-align:center;padding:100px 0}
+.cta-recovery h2{font-size:clamp(28px,4vw,42px);font-weight:200;letter-spacing:0.03em;margin-bottom:16px}
+.cta-recovery p{color:#888;font-size:15px;margin-bottom:32px}
+.cta-recovery a{display:inline-block;padding:14px 36px;border:1px solid #ff4d4d;border-radius:100px;color:#ff4d4d;text-decoration:none;font-size:14px;font-weight:600;transition:all 0.3s}
+.cta-recovery a:hover{background:#ff4d4d;color:#fff}
+
+@media(max-width:768px){
+.process-grid{grid-template-columns:1fr 1fr}
+.process-arrow{display:none}
+.service-cards{grid-template-columns:1fr}
+.stat-banner{grid-template-columns:1fr 1fr}
+.stat-banner-item{border-bottom:1px solid rgba(255,255,255,0.08)}
+}
+@media(max-width:480px){
+.process-grid{grid-template-columns:1fr}
+.stat-banner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+<div class="container nav-inner">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="about.html">소개</a></li>
+    <li><a href="practice.html">업무분야</a></li>
+    <li><a href="recovery.html" style="color:#ff4d4d">기업회생센터</a></li>
+    <li><a href="team.html">구성원</a></li>
+    <li><a href="cases.html">업무사례</a></li>
+    <li><a href="contact.html">상담문의</a></li>
+  </ul>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="recovery-hero">
+  <div class="container">
+    <h1 class="reveal">기업<strong>회생</strong>센터</h1>
+    <p class="reveal">재정적 위기에 처한 기업의 회생과 재건을 위해<br>전문 변호사가 처음부터 끝까지 함께합니다</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stat-banner">
+  <div class="stat-banner-item reveal"><div class="stat-banner-num">150<span style="color:#ff4d4d">+</span></div><div class="stat-banner-label">회생 사건 수행</div></div>
+  <div class="stat-banner-item reveal"><div class="stat-banner-num">92<span style="color:#ff4d4d">%</span></div><div class="stat-banner-label">인가 성공률</div></div>
+  <div class="stat-banner-item reveal"><div class="stat-banner-num">15<span style="color:#ff4d4d">+</span></div><div class="stat-banner-label">전담 변호사</div></div>
+  <div class="stat-banner-item reveal"><div class="stat-banner-num">20<span style="color:#ff4d4d">년</span></div><div class="stat-banner-label">도산 전문 경력</div></div>
+</div>
+
+<!-- PROCESS (다크 배경) -->
+<section class="section" style="padding:120px 0">
+  <div class="container">
+    <h2 class="section-title reveal" style="margin-bottom:60px">회생 절차</h2>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="process-num">01</div>
+        <div class="process-title">사전 검토</div>
+        <div class="process-desc">재무 상태 분석, 회생 가능성 판단, 채권자 구성 파악, 사전계획안 검토</div>
+        <div class="process-arrow">&#8594;</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">02</div>
+        <div class="process-title">회생 신청</div>
+        <div class="process-desc">법원에 회생절차 개시 신청, 보전처분 및 포괄적 금지명령 확보, 관리인 선임</div>
+        <div class="process-arrow">&#8594;</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">03</div>
+        <div class="process-title">회생계획안</div>
+        <div class="process-desc">채권 조사 및 확정, 회생계획안 작성, 관계인 집회 의결, 법원 인가</div>
+        <div class="process-arrow">&#8594;</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">04</div>
+        <div class="process-title">계획 수행</div>
+        <div class="process-desc">인가된 회생계획에 따른 변제 수행, 모니터링, 회생절차 종결</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (흰색 배경) -->
+<section class="section section-light" style="padding:120px 0">
+  <div class="container">
+    <h2 class="section-title reveal" style="margin-bottom:16px">서비스 영역</h2>
+    <p class="reveal" style="color:#888;margin-bottom:60px;font-size:15px">기업회생의 모든 단계에서 전문적인 법률 서비스를 제공합니다</p>
+    <div class="service-cards">
+      <div class="service-card reveal">
+        <div class="num">01</div>
+        <h3>법인회생</h3>
+        <p>재정적 어려움에 처한 법인의 회생절차 개시부터 계획 수행까지 전 과정을 대리합니다</p>
+        <div class="tags"><span class="tag">회생신청</span><span class="tag">채권조사</span><span class="tag">계획안작성</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="num">02</div>
+        <h3>개인회생</h3>
+        <p>급여소득자 및 영업소득자의 개인회생절차를 통한 채무 조정을 지원합니다</p>
+        <div class="tags"><span class="tag">변제계획</span><span class="tag">면책</span><span class="tag">채무조정</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="num">03</div>
+        <h3>파산/면책</h3>
+        <p>회생이 어려운 경우 파산 및 면책 절차를 통해 새 출발을 돕습니다</p>
+        <div class="tags"><span class="tag">법인파산</span><span class="tag">개인파산</span><span class="tag">면책결정</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="num">04</div>
+        <h3>M&A/구조조정</h3>
+        <p>회생절차 내 M&A, 사업 양수도, 기업 구조조정 관련 법률 자문을 제공합니다</p>
+        <div class="tags"><span class="tag">사업양수도</span><span class="tag">인수합병</span><span class="tag">구조조정</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="num">05</div>
+        <h3>채권자 대리</h3>
+        <p>회생절차에서 채권자의 권리를 보호하고, 채권 회수를 극대화합니다</p>
+        <div class="tags"><span class="tag">채권신고</span><span class="tag">이의신청</span><span class="tag">의결권행사</span></div>
+      </div>
+      <div class="service-card reveal">
+        <div class="num">06</div>
+        <h3>워크아웃/사적정리</h3>
+        <p>법원 절차 없이 채권자단과의 협의를 통한 사적 구조조정을 지원합니다</p>
+        <div class="tags"><span class="tag">채권단협의</span><span class="tag">자율협약</span><span class="tag">출자전환</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (그레이 배경) -->
+<section class="section section-gray" style="padding:120px 0">
+  <div class="container">
+    <h2 class="section-title reveal" style="margin-bottom:60px">자주 묻는 질문</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">기업회생과 파산의 차이는 무엇인가요? <span class="arrow">&#9660;</span></div>
+        <div class="faq-a">기업회생은 사업을 계속하면서 채무를 조정하여 기업을 재건하는 절차이고, 파산은 기업의 자산을 처분하여 채권자에게 배당하는 청산 절차입니다. 회생이 가능한 기업은 회생을, 그렇지 않은 경우 파산을 고려합니다.</div>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">회생 신청 후에도 사업을 계속할 수 있나요? <span class="arrow">&#9660;</span></div>
+        <div class="faq-a">네, 가능합니다. 회생절차 개시 후에도 관리인(보통 기존 대표이사) 하에서 사업 활동을 계속할 수 있습니다. 다만, 법원의 허가가 필요한 행위가 일부 있습니다.</div>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">회생절차는 얼마나 걸리나요? <span class="arrow">&#9660;</span></div>
+        <div class="faq-a">일반적으로 회생절차 개시부터 회생계획 인가까지 약 6~12개월 소요됩니다. 사전계획안(Pre-packaged Plan)을 활용하면 더 빠르게 진행할 수 있습니다.</div>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">채무를 얼마나 감면받을 수 있나요? <span class="arrow">&#9660;</span></div>
+        <div class="faq-a">감면 비율은 회사의 청산가치, 계속기업가치, 채권자 구성 등에 따라 달라집니다. 실무적으로 회생채권의 경우 상당 부분 감면이 이루어지며, 변제 기간은 통상 10년 이내입니다.</div>
+      </div>
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">회생 전 준비해야 할 서류는? <span class="arrow">&#9660;</span></div>
+        <div class="faq-a">재무제표(최근 3개년), 채권자 목록, 자산 목록, 법인등기부등본, 사업계획서 등이 필요합니다. 사전 상담 시 구체적인 준비 사항을 안내드립니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-recovery">
+  <div class="container">
+    <h2 class="reveal">기업의 위기,<br>민주가 함께합니다</h2>
+    <p class="reveal">전문 변호사가 최적의 회생 전략을 수립해 드립니다</p>
+    <a href="contact.html" class="reveal">상담 신청하기 &#8594;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" style="padding-bottom:48px;">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">MINJU</div><p class="footer-text">법무법인 민주<br>서울 서초구 법원로4길 23<br>02-585-2003</p></div>
+      <div><h5 class="footer-heading">업무분야</h5><ul class="footer-links"><li><a href="practice.html">기업자문</a></li><li><a href="recovery.html">기업회생</a></li><li><a href="practice.html">형사</a></li><li><a href="practice.html">부동산</a></li></ul></div>
+      <div><h5 class="footer-heading">바로가기</h5><ul class="footer-links"><li><a href="team.html">구성원</a></li><li><a href="cases.html">업무사례</a></li><li><a href="contact.html">상담문의</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 법무법인 민주. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- 하단 고정바 -->
+<div style="position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px);z-index:200;border-top:1px solid rgba(255,255,255,0.08);">
+  <a href="contact.html" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,0.08);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">온라인상담</a>
+  <a href="#" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,0.08);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">카톡상담</a>
+  <a href="tel:02-585-2003" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">전화상담</a>
+</div>
+
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open')});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>
