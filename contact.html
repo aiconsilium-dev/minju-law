@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상담문의 | MINJU</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="practice.html">업무분야</a>
+    <a href="team.html">구성원</a>
+    <a href="cases.html">업무사례</a>
+    <a href="contact.html">상담문의</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">소개</a>
+  <a href="practice.html">업무분야</a>
+  <a href="team.html">구성원</a>
+  <a href="cases.html">업무사례</a>
+  <a href="contact.html">상담문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title-light reveal">Contact</h1>
+    <h1 class="hero-title-bold reveal">Us</h1>
+    <p class="hero-sub reveal">법률 상담이 필요하신가요? 아래 양식을 작성해 주시면 신속하게 연락드리겠습니다.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <form>
+          <div class="form-group">
+            <label>성함</label>
+            <input type="text" placeholder="홍길동">
+          </div>
+          <div class="form-group">
+            <label>연락처</label>
+            <input type="tel" placeholder="010-0000-0000">
+          </div>
+          <div class="form-group">
+            <label>이메일</label>
+            <input type="email" placeholder="email@example.com">
+          </div>
+          <div class="form-group">
+            <label>상담 분야</label>
+            <input type="text" placeholder="기업자문, 형사, 부동산 등">
+          </div>
+          <div class="form-group">
+            <label>상담 내용</label>
+            <textarea placeholder="상담하고 싶은 내용을 자유롭게 작성해 주세요."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">상담 신청</button>
+        </form>
+      </div>
+      <div class="contact-info reveal">
+        <h4>주소</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <h4>전화</h4>
+        <p><a href="tel:02-555-1234">02-555-1234</a></p>
+        <h4>팩스</h4>
+        <p>02-555-1235</p>
+        <h4>이메일</h4>
+        <p><a href="mailto:contact@minju-law.co.kr">contact@minju-law.co.kr</a></p>
+        <h4>상담시간</h4>
+        <p>평일 09:00 - 18:00<br>토요일 10:00 - 13:00 (예약제)<br>일요일/공휴일 휴무</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>법무법인 민주</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <p style="margin-top:12px">대표전화 02-555-1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>업무분야</h4>
+        <ul>
+          <li><a href="practice.html">기업자문</a></li>
+          <li><a href="practice.html">형사사건</a></li>
+          <li><a href="practice.html">부동산/건설</a></li>
+          <li><a href="practice.html">민사소송</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="about.html">법인 소개</a></li>
+          <li><a href="team.html">구성원</a></li>
+          <li><a href="cases.html">업무사례</a></li>
+          <li><a href="contact.html">상담문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 법무법인 민주. All rights reserved.</span>
+      <a href="tel:02-555-1234">02-555-1234</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>업무사례 | MINJU</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="practice.html">업무분야</a>
+    <a href="team.html">구성원</a>
+    <a href="cases.html">업무사례</a>
+    <a href="contact.html">상담문의</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">소개</a>
+  <a href="practice.html">업무분야</a>
+  <a href="team.html">구성원</a>
+  <a href="cases.html">업무사례</a>
+  <a href="contact.html">상담문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title-light reveal">Success</h1>
+    <h1 class="hero-title-bold reveal">Stories</h1>
+    <p class="hero-sub reveal">법무법인 민주가 이끌어낸 주요 성공 사례들을 소개합니다.</p>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="section">
+  <div class="container">
+    <div class="filter-pills reveal">
+      <button class="filter-pill active" data-filter="all">전체</button>
+      <button class="filter-pill" data-filter="corporate">기업</button>
+      <button class="filter-pill" data-filter="criminal">형사</button>
+      <button class="filter-pill" data-filter="realestate">부동산</button>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card reveal" data-category="corporate">
+        <div class="date">2024.12</div>
+        <span class="case-tag">기업</span>
+        <h3>대규모 M&amp;A 거래 자문 성공 - 3,000억원 규모 인수합병</h3>
+      </div>
+      <div class="case-card reveal" data-category="criminal">
+        <div class="date">2024.11</div>
+        <span class="case-tag">형사</span>
+        <h3>특수경제범죄 무죄 판결 획득 - 횡령 혐의 전면 무죄</h3>
+      </div>
+      <div class="case-card reveal" data-category="realestate">
+        <div class="date">2024.10</div>
+        <span class="case-tag">부동산</span>
+        <h3>재개발 조합 설립인가 취소소송 승소</h3>
+      </div>
+      <div class="case-card reveal" data-category="corporate">
+        <div class="date">2024.09</div>
+        <span class="case-tag">기업</span>
+        <h3>IT 기업 특허침해소송 승소 - 50억원 손해배상 인용</h3>
+      </div>
+      <div class="case-card reveal" data-category="criminal">
+        <div class="date">2024.08</div>
+        <span class="case-tag">형사</span>
+        <h3>의료사고 형사사건 불기소 처분 획득</h3>
+      </div>
+      <div class="case-card reveal" data-category="realestate">
+        <div class="date">2024.07</div>
+        <span class="case-tag">부동산</span>
+        <h3>대형 건설사 하자보수 분쟁 조정 - 120억원 합의</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>법률 문제, 혼자 고민하지 마세요</h2>
+  <a href="contact.html" class="cta-link">상담 신청하기 &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>법무법인 민주</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <p style="margin-top:12px">대표전화 02-555-1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>업무분야</h4>
+        <ul>
+          <li><a href="practice.html">기업자문</a></li>
+          <li><a href="practice.html">형사사건</a></li>
+          <li><a href="practice.html">부동산/건설</a></li>
+          <li><a href="practice.html">민사소송</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="about.html">법인 소개</a></li>
+          <li><a href="team.html">구성원</a></li>
+          <li><a href="cases.html">업무사례</a></li>
+          <li><a href="contact.html">상담문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 법무법인 민주. All rights reserved.</span>
+      <a href="tel:02-555-1234">02-555-1234</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
+
+// Filter
+const pills=document.querySelectorAll('.filter-pill');
+const cards=document.querySelectorAll('.case-card');
+pills.forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    pills.forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    const f=pill.dataset.filter;
+    cards.forEach(card=>{
+      if(f==='all'||card.dataset.category===f){card.style.display=''}
+      else{card.style.display='none'}
+    });
+  });
+});
+
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MINJU | 법무법인 민주</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.index-hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;text-align:center;overflow:hidden}
+.hero-plus{position:absolute;top:80px;left:60px;font-size:120px;font-weight:100;color:#ff4d4d;line-height:1;user-select:none}
+.hero-heading{font-size:80px;font-weight:200;letter-spacing:.08em;line-height:1.2}
+.hero-heading-sub{font-size:80px;font-weight:200;letter-spacing:.08em;line-height:1.2;margin-top:4px}
+.hero-search{position:absolute;bottom:160px;left:50%;transform:translateX(-50%);width:100%;max-width:480px;padding:0 20px}
+.hero-search input{width:100%;padding:16px 28px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:100px;font-size:14px;color:#fff}
+.hero-search input::placeholder{color:#666}
+.hero-ai-link{text-align:center;margin-top:14px}
+.hero-ai-link a{color:#ff4d4d;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.hero-ai-link a:hover{color:#fff}
+.index-body{padding-bottom:60px}
+@media(max-width:768px){
+  .hero-heading,.hero-heading-sub{font-size:40px}
+  .hero-plus{font-size:72px;top:100px;left:20px}
+  .hero-search{bottom:120px;max-width:90%}
+}
+@media(max-width:480px){
+  .hero-heading,.hero-heading-sub{font-size:28px}
+  .hero-plus{font-size:56px}
+}
+</style>
+</head>
+<body class="index-body">
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="practice.html">업무분야</a>
+    <a href="team.html">구성원</a>
+    <a href="cases.html">업무사례</a>
+    <a href="contact.html">상담문의</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">소개</a>
+  <a href="practice.html">업무분야</a>
+  <a href="team.html">구성원</a>
+  <a href="cases.html">업무사례</a>
+  <a href="contact.html">상담문의</a>
+</div>
+
+<!-- HERO -->
+<section class="index-hero">
+  <div class="hero-plus">+</div>
+  <h1 class="hero-heading">Your Trust.</h1>
+  <p class="hero-heading-sub">Our Commitment. Justice Delivered.</p>
+  <div class="hero-search">
+    <input type="text" placeholder="어떤 법률 문제가 있으신가요?">
+    <div class="hero-ai-link"><a href="contact.html">AI민주로 상담 신청</a></div>
+  </div>
+  <div class="scroll-arrow">&#8595;</div>
+</section>
+
+<!-- STATS -->
+<section class="section">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div class="stat-item">
+        <div class="stat-plus">+</div>
+        <div class="stat-number">25+</div>
+        <div class="stat-label">전문 변호사</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-plus">+</div>
+        <div class="stat-number">200+</div>
+        <div class="stat-label">업무사례</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-plus">+</div>
+        <div class="stat-number">2003</div>
+        <div class="stat-label">설립</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE AREAS PREVIEW -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Practice Areas</h2>
+    <div class="practice-grid">
+      <div class="practice-card reveal">
+        <div class="num">01</div>
+        <h3>기업자문</h3>
+        <p>기업의 설립부터 운영, M&amp;A까지 전 과정에 걸친 법률 자문을 제공합니다.</p>
+      </div>
+      <div class="practice-card reveal">
+        <div class="num">02</div>
+        <h3>형사사건</h3>
+        <p>수사 단계부터 재판까지, 의뢰인의 권리를 철저히 보호합니다.</p>
+      </div>
+      <div class="practice-card reveal">
+        <div class="num">03</div>
+        <h3>부동산/건설</h3>
+        <p>부동산 거래, 개발사업, 건설분쟁 등 부동산 관련 종합 법률서비스를 제공합니다.</p>
+      </div>
+      <div class="practice-card reveal">
+        <div class="num">04</div>
+        <h3>민사소송</h3>
+        <p>계약분쟁, 손해배상, 가사사건 등 민사 전 분야에서 최선의 결과를 이끌어냅니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT CASES -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Recent Cases</h2>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div class="date">2024.12</div>
+        <span class="case-tag">기업</span>
+        <h3>대규모 M&amp;A 거래 자문 성공</h3>
+      </div>
+      <div class="case-card reveal">
+        <div class="date">2024.11</div>
+        <span class="case-tag">형사</span>
+        <h3>특수경제범죄 무죄 판결 획득</h3>
+      </div>
+      <div class="case-card reveal">
+        <div class="date">2024.10</div>
+        <span class="case-tag">부동산</span>
+        <h3>재개발 조합 설립인가 취소소송 승소</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>법률 문제, 혼자 고민하지 마세요</h2>
+  <a href="contact.html" class="cta-link">상담 신청하기 &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>법무법인 민주</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <p style="margin-top:12px">대표전화 02-555-1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>업무분야</h4>
+        <ul>
+          <li><a href="practice.html">기업자문</a></li>
+          <li><a href="practice.html">형사사건</a></li>
+          <li><a href="practice.html">부동산/건설</a></li>
+          <li><a href="practice.html">민사소송</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="about.html">법인 소개</a></li>
+          <li><a href="team.html">구성원</a></li>
+          <li><a href="cases.html">업무사례</a></li>
+          <li><a href="contact.html">상담문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 법무법인 민주. All rights reserved.</span>
+      <a href="tel:02-555-1234">02-555-1234</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <a href="contact.html">온라인상담</a>
+  <a href="#">카톡상담</a>
+  <a href="tel:02-555-1234">전화상담</a>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+// Hamburger
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
+// Reveal
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

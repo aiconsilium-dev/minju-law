@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>소개 | MINJU</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="practice.html">업무분야</a>
+    <a href="team.html">구성원</a>
+    <a href="cases.html">업무사례</a>
+    <a href="contact.html">상담문의</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">소개</a>
+  <a href="practice.html">업무분야</a>
+  <a href="team.html">구성원</a>
+  <a href="cases.html">업무사례</a>
+  <a href="contact.html">상담문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title-light reveal">About</h1>
+    <h1 class="hero-title-bold reveal">Minju</h1>
+    <p class="hero-sub reveal">2003년 설립 이래, 법무법인 민주는 의뢰인의 신뢰를 최우선 가치로 삼아 정의 실현에 헌신해 왔습니다.</p>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Our Values</h2>
+    <div class="values-grid">
+      <div class="value-item reveal">
+        <div class="num">01</div>
+        <h3>신뢰</h3>
+        <p>의뢰인과의 깊은 신뢰 관계를 바탕으로, 모든 사안에 진정성 있는 법률 서비스를 제공합니다.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="num">02</div>
+        <h3>전문성</h3>
+        <p>각 분야 최고의 전문 변호사들이 체계적이고 심도 있는 법률 자문을 수행합니다.</p>
+      </div>
+      <div class="value-item reveal">
+        <div class="num">03</div>
+        <h3>헌신</h3>
+        <p>의뢰인의 권리 보호와 정의 실현을 위해 끝까지 최선을 다합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title reveal">History</h2>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-year">2003</div>
+        <div class="timeline-content">법무법인 민주 설립. 서울 서초구에 본사 개소.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2007</div>
+        <div class="timeline-content">기업법무팀 신설. 대형 M&amp;A 자문 시작.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2012</div>
+        <div class="timeline-content">부동산/건설 전문팀 확대. 재개발/재건축 분야 선도.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2016</div>
+        <div class="timeline-content">형사전문센터 개설. 백건 이상의 무죄 판결 달성.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-content">IT/스타트업 법률자문팀 신설. 디지털 전환 대응.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-content">AI 기반 법률 상담 서비스 'AI민주' 런칭.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>법률 문제, 혼자 고민하지 마세요</h2>
+  <a href="contact.html" class="cta-link">상담 신청하기 &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>법무법인 민주</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <p style="margin-top:12px">대표전화 02-555-1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>업무분야</h4>
+        <ul>
+          <li><a href="practice.html">기업자문</a></li>
+          <li><a href="practice.html">형사사건</a></li>
+          <li><a href="practice.html">부동산/건설</a></li>
+          <li><a href="practice.html">민사소송</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="about.html">법인 소개</a></li>
+          <li><a href="team.html">구성원</a></li>
+          <li><a href="cases.html">업무사례</a></li>
+          <li><a href="contact.html">상담문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 법무법인 민주. All rights reserved.</span>
+      <a href="tel:02-555-1234">02-555-1234</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

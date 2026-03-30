@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>구성원 | MINJU</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-logo">MINJU</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="practice.html">업무분야</a>
+    <a href="team.html">구성원</a>
+    <a href="cases.html">업무사례</a>
+    <a href="contact.html">상담문의</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">소개</a>
+  <a href="practice.html">업무분야</a>
+  <a href="team.html">구성원</a>
+  <a href="cases.html">업무사례</a>
+  <a href="contact.html">상담문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title-light reveal">Our</h1>
+    <h1 class="hero-title-bold reveal">People</h1>
+    <p class="hero-sub reveal">각 분야 최고의 전문성과 풍부한 경험을 갖춘 법률 전문가들이 함께합니다.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section">
+  <div class="container">
+    <div class="team-grid">
+      <div class="team-member reveal">
+        <div class="team-avatar">KH</div>
+        <h3>김현수</h3>
+        <p>대표변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">PJ</div>
+        <h3>박정우</h3>
+        <p>수석변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">LM</div>
+        <h3>이민정</h3>
+        <p>파트너변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">CS</div>
+        <h3>최서연</h3>
+        <p>파트너변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">JD</div>
+        <h3>정대한</h3>
+        <p>변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">HS</div>
+        <h3>한소영</h3>
+        <p>변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">YJ</div>
+        <h3>윤재호</h3>
+        <p>변호사</p>
+      </div>
+      <div class="team-member reveal">
+        <div class="team-avatar">SW</div>
+        <h3>송우진</h3>
+        <p>변호사</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>법률 문제, 혼자 고민하지 마세요</h2>
+  <a href="contact.html" class="cta-link">상담 신청하기 &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>법무법인 민주</h4>
+        <p>서울특별시 서초구 서초대로 248<br>민주빌딩 7층</p>
+        <p style="margin-top:12px">대표전화 02-555-1234</p>
+      </div>
+      <div class="footer-col">
+        <h4>업무분야</h4>
+        <ul>
+          <li><a href="practice.html">기업자문</a></li>
+          <li><a href="practice.html">형사사건</a></li>
+          <li><a href="practice.html">부동산/건설</a></li>
+          <li><a href="practice.html">민사소송</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="about.html">법인 소개</a></li>
+          <li><a href="team.html">구성원</a></li>
+          <li><a href="cases.html">업무사례</a></li>
+          <li><a href="contact.html">상담문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 법무법인 민주. All rights reserved.</span>
+      <a href="tel:02-555-1234">02-555-1234</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
