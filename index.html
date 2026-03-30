@@ -65,7 +65,7 @@
 </section>
 
 <!-- STATS -->
-<section class="section">
+<section class="section section-light">
   <div class="container">
     <div class="stats-grid reveal">
       <div class="stat-item">
@@ -117,7 +117,7 @@
 </section>
 
 <!-- RECENT CASES -->
-<section class="section">
+<section class="section section-gray">
   <div class="container">
     <h2 class="section-title reveal">Recent Cases</h2>
     <div class="cases-grid">
@@ -147,7 +147,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
+<footer style="padding-bottom:48px;" class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
@@ -199,5 +199,13 @@ mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
+
+<!-- 하단 고정바 -->
+<div style="position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px);z-index:200;border-top:1px solid rgba(255,255,255,0.08);">
+  <a href="contact.html" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,0.08);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">온라인상담</a>
+  <a href="#" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,0.08);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">카톡상담</a>
+  <a href="tel:02-585-2003" style="flex:1;text-align:center;padding:14px 0;color:#888;text-decoration:none;font-size:12px;font-weight:500;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">전화상담</a>
+</div>
+
 </body>
 </html>
