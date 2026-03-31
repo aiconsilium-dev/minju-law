@@ -37,7 +37,7 @@ input,textarea,button{font-family:inherit;border:none;outline:none;background:no
 .footer-bottom a{color:#666}
 
 /* ===== REVEAL ANIMATION ===== */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.reveal{opacity:1;transform:translateY(0);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* ===== SECTION ===== */
@@ -135,6 +135,8 @@ input,textarea,button{font-family:inherit;border:none;outline:none;background:no
   .container{padding:0 32px}
 }
 @media(max-width:768px){
+.index-hero .hero-heading,.index-hero .hero-heading-sub{font-size:48px!important}
+
   .nav-links{display:none}
   .hamburger{display:flex}
   .hero-title-light,.hero-title-bold{font-size:52px}
@@ -152,6 +154,9 @@ input,textarea,button{font-family:inherit;border:none;outline:none;background:no
   .footer-bottom{flex-direction:column;gap:8px;text-align:center}
 }
 @media(max-width:480px){
+.index-hero .hero-heading,.index-hero .hero-heading-sub{font-size:36px!important;letter-spacing:0.02em!important}
+.hero-search input{font-size:14px!important}
+
   .container{padding:0 20px}
   .nav{padding:20px}
   .hero-title-light,.hero-title-bold{font-size:36px}
@@ -202,3 +207,14 @@ input,textarea,button{font-family:inherit;border:none;outline:none;background:no
 .section-gray h2 { color: #111; }
 
 .index-hero h1,.index-hero p{word-break:keep-all;overflow-wrap:break-word}
+
+.js-loaded .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.js-loaded .reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+.nav-links{display:none!important;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:300}
+.nav-links.open{display:flex!important}
+.nav-links li{list-style:none}
+.nav-links a{font-size:20px!important;color:#fff!important}
+.nav-toggle{display:flex!important}
+}

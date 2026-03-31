@@ -126,7 +126,7 @@ const hb=document.getElementById('hamburger'),mm=document.getElementById('mobile
 hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active')});
 mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active')}));
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.body.classList.add('js-loaded');document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
