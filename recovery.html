@@ -31,7 +31,7 @@
 .stat-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
 .stat-banner-item{padding:48px 32px;text-align:center;border-right:1px solid rgba(255,255,255,0.08)}
 .stat-banner-item:last-child{border-right:none}
-.stat-banner-num{font-size:42px;font-weight:200;color:#fff;letter-spacing:-0.02em}
+.stat-banner-num{font-size:36px;font-weight:200;color:#fff;letter-spacing:-0.02em}
 .stat-banner-label{font-size:12px;color:#666;margin-top:8px}
 
 .faq-list{max-width:800px;margin:0 auto}
@@ -233,7 +233,7 @@
 
 <script>
 document.getElementById('navToggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('navLinks').classList.toggle('open')});
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.12});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.05});
 document.body.classList.add('js-loaded');document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
 </script>
 </body>
