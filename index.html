@@ -27,9 +27,29 @@
   .hero-plus{font-size:56px}
 }
 </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+.loader{position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 1s cubic-bezier(0.76,0,0.24,1)}
+.loader.done{transform:translateY(-100%);pointer-events:none}
+.loader-text{font-size:100px;font-weight:200;letter-spacing:.3em;color:#fff;margin-bottom:40px;opacity:0;animation:loaderFadeIn .6s ease forwards}
+.loader-bar-wrap{width:200px;position:relative}
+.loader-bar-bg{width:100%;height:1px;background:rgba(255,255,255,.15);border-radius:1px;overflow:hidden}
+.loader-bar-fill{height:100%;width:0;background:#ff4d4d;transition:width .05s linear}
+.loader-counter{text-align:center;margin-top:16px;font-size:14px;font-weight:300;letter-spacing:.15em;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+@keyframes loaderFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.loader-text{font-size:48px;letter-spacing:.2em}.loader-bar-wrap{width:160px}}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.loader{display:none!important}</style></noscript>
 </head>
 <body class="index-body">
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-text">MINJU</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar-bg"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <div class="loader-counter" id="loaderCount">0</div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -205,6 +225,18 @@
 </div>
 
 <script>
+// Loader
+(function(){
+  var fill=document.getElementById('loaderFill'),counter=document.getElementById('loaderCount'),loader=document.getElementById('loader');
+  var progress=0,duration=2500,interval=25,steps=duration/interval,inc=100/steps;
+  var timer=setInterval(function(){
+    progress=Math.min(progress+inc+Math.random()*0.5,100);
+    var p=Math.round(progress);
+    fill.style.width=p+'%';
+    counter.textContent=p;
+    if(p>=100){clearInterval(timer);setTimeout(function(){loader.classList.add('done')},300)}
+  },interval);
+})();
 // Nav scroll
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
 // Hamburger

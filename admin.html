@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MINJU Admin | CMS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#ff4d4d;--bg:#fff;--sidebar:#fafafa;--border:#eee;--text:#111;--gray:#666;--light:#f5f5f5}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+input,textarea,select{font-family:inherit;font-size:14px}
+
+/* Layout */
+.sidebar{position:fixed;top:0;left:0;width:240px;height:100vh;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s}
+.sidebar-logo{padding:24px 20px;font-size:18px;font-weight:700;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+.sidebar-logo span{color:var(--red)}
+.sidebar-nav{flex:1;padding:12px 0;overflow-y:auto}
+.sidebar-item{display:flex;align-items:center;padding:10px 20px;gap:10px;color:var(--gray);font-size:13px;font-weight:500;transition:all .15s;cursor:pointer;border-left:3px solid transparent}
+.sidebar-item:hover{background:#f0f0f0;color:var(--text)}
+.sidebar-item.active{color:var(--red);border-left-color:var(--red);background:rgba(255,77,77,.04)}
+.sidebar-item svg{width:18px;height:18px;flex-shrink:0}
+.sidebar-user{padding:16px 20px;border-top:1px solid var(--border);font-size:12px;color:var(--gray)}
+
+.main{margin-left:240px;min-height:100vh}
+.topbar{height:56px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#fff;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:16px;font-weight:600}
+.topbar-actions{display:flex;align-items:center;gap:12px}
+.topbar-btn{padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;color:var(--gray);transition:all .15s}
+.topbar-btn:hover{border-color:var(--red);color:var(--red)}
+.hamburger-admin{display:none;background:none;border:none;padding:4px;cursor:pointer}
+.hamburger-admin span{display:block;width:20px;height:2px;background:var(--text);margin:4px 0}
+
+.content{padding:28px}
+
+/* Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;transition:box-shadow .2s}
+.kpi-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.kpi-label{font-size:12px;color:var(--gray);margin-bottom:4px}
+.kpi-value{font-size:28px;font-weight:700}
+.kpi-value span{color:var(--red)}
+.kpi-sub{font-size:11px;color:var(--gray);margin-top:4px}
+
+/* Table */
+.panel{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:14px;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 20px;font-size:13px;border-bottom:1px solid var(--border)}
+th{background:var(--light);color:var(--gray);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,77,77,.02)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;transition:all .15s}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#e63e3e}
+.btn-outline{background:#fff;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-ghost{background:none;border:none;color:var(--gray);padding:4px 8px;font-size:12px}
+.btn-ghost:hover{color:var(--red)}
+
+/* Status */
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-green{background:#e6f9e6;color:#2d8a2d}
+.badge-yellow{background:#fff8e0;color:#b8860b}
+.badge-gray{background:#f0f0f0;color:#666}
+.badge-red{background:#ffe6e6;color:#cc0000}
+
+/* Chart bar */
+.chart-bar-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.chart-bar-label{width:40px;font-size:11px;color:var(--gray);text-align:right;flex-shrink:0}
+.chart-bar{height:20px;background:var(--light);border-radius:4px;flex:1;overflow:hidden}
+.chart-bar-fill{height:100%;background:var(--red);border-radius:4px;transition:width .6s}
+
+/* Grid layouts */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* Cards for members/cases */
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;transition:box-shadow .2s}
+.card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card-img{width:100%;height:140px;background:var(--light);border-radius:6px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:12px}
+.card-tag{display:inline-block;padding:2px 8px;background:rgba(255,77,77,.08);color:var(--red);border-radius:4px;font-size:11px;font-weight:600;margin-bottom:6px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.card-desc{font-size:12px;color:var(--gray);line-height:1.5}
+.card-date{font-size:11px;color:#aaa;margin-top:8px}
+.card-actions{display:flex;gap:6px;margin-top:10px}
+
+/* Member card */
+.member-card{text-align:center;padding:20px 16px}
+.member-photo{width:72px;height:72px;border-radius:50%;background:var(--light);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:11px}
+.member-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.member-title{font-size:12px;color:var(--gray)}
+.member-field{font-size:11px;color:var(--red);margin-top:4px}
+
+/* Form */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--gray);margin-bottom:6px}
+.form-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;transition:border-color .15s;background:#fff}
+.form-input:focus{outline:none;border-color:var(--red)}
+textarea.form-input{min-height:100px;resize:vertical}
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+
+/* Preview */
+.hero-preview{width:100%;height:200px;background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.6)),var(--light);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;margin-bottom:16px;position:relative;overflow:hidden}
+
+/* List item (practice areas) */
+.list-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none}
+.list-num{width:32px;height:32px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gray);flex-shrink:0}
+.list-body{flex:1;min-width:0}
+.list-body h4{font-size:14px;font-weight:600}
+.list-body p{font-size:12px;color:var(--gray);margin-top:2px}
+.list-actions{display:flex;gap:4px;flex-shrink:0}
+.arrow-btn{width:28px;height:28px;border:1px solid var(--border);border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;color:var(--gray);transition:all .15s}
+.arrow-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* FAQ */
+.faq-item{border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}
+.faq-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:600}
+.faq-body{padding:0 16px 12px;font-size:13px;color:var(--gray);display:none}
+.faq-item.open .faq-body{display:block}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;width:90%;max-width:560px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.modal-header h3{font-size:16px;font-weight:600}
+.modal-close{width:32px;height:32px;border:none;background:var(--light);border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gray)}
+.modal-close:hover{background:var(--red);color:#fff}
+.modal-body{padding:24px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+
+/* Responsive */
+@media(max-width:1024px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hamburger-admin{display:block}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:1fr 1fr}
+  .content{padding:20px 16px}
+  .form-row{flex-direction:column;gap:0}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">MINJU <span>CMS</span></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-item active" data-page="dashboard" onclick="navigate('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      대시보드
+    </div>
+    <div class="sidebar-item" data-page="hero" onclick="navigate('hero')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/></svg>
+      히어로 관리
+    </div>
+    <div class="sidebar-item" data-page="notices" onclick="navigate('notices')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+      공지사항
+    </div>
+    <div class="sidebar-item" data-page="cases" onclick="navigate('cases')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      업무사례 관리
+    </div>
+    <div class="sidebar-item" data-page="members" onclick="navigate('members')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      구성원 관리
+    </div>
+    <div class="sidebar-item" data-page="practice" onclick="navigate('practice')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      업무분야 관리
+    </div>
+    <div class="sidebar-item" data-page="recovery" onclick="navigate('recovery')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      기업회생 관리
+    </div>
+    <div class="sidebar-item" data-page="consult" onclick="navigate('consult')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      상담문의 관리
+    </div>
+    <div class="sidebar-item" data-page="settings" onclick="navigate('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      사이트 설정
+    </div>
+  </nav>
+  <div class="sidebar-user">
+    관리자 로그인<br><strong>admin@minju.co.kr</strong>
+  </div>
+</aside>
+
+<!-- Main -->
+<div class="main" id="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="hamburger-admin" id="hambtn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-title" id="pageTitle">대시보드</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="topbar-btn" onclick="window.open('index.html','_blank')">사이트 보기</button>
+      <button class="topbar-btn">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="content" id="content">
+    <!-- Pages rendered by JS -->
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">편집</h3>
+      <button class="modal-close" onclick="closeModal()">x</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var data = {
+  notices: [
+    {id:1,title:'2025년 설 연휴 업무 안내',date:'2025-01-20',status:'게시중',views:234,content:'설 연휴 기간(1/28~1/30) 업무가 중단됩니다. 긴급 상담은 대표번호로 연락 바랍니다.'},
+    {id:2,title:'신규 변호사 영입 안내',date:'2025-01-15',status:'게시중',views:189,content:'기업자문 분야 전문 김민수 변호사가 새롭게 합류하였습니다.'},
+    {id:3,title:'홈페이지 리뉴얼 안내',date:'2025-01-10',status:'게시중',views:312,content:'법무법인 민주 홈페이지가 새롭게 리뉴얼되었습니다.'},
+    {id:4,title:'기업회생 무료상담 안내',date:'2025-01-05',status:'임시저장',views:0,content:'기업회생 무료상담을 진행합니다. 자세한 내용은 상담문의를 이용해주세요.'},
+    {id:5,title:'2024년 연말 업무 실적',date:'2024-12-30',status:'게시중',views:456,content:'2024년 한 해 동안의 법무법인 민주 업무 실적을 공유합니다.'}
+  ],
+  cases: [
+    {id:1,tag:'기업자문',title:'대규모 M&A 거래 자문 성공',desc:'500억원 규모 M&A 거래에서 매수측 법률 자문을 성공적으로 수행',date:'2024-12'},
+    {id:2,tag:'형사',title:'특수경제범죄 무죄 판결 획득',desc:'횡령 혐의 사건에서 무죄 판결을 이끌어내 의뢰인의 무고함을 입증',date:'2024-11'},
+    {id:3,tag:'부동산',title:'재개발 조합 설립인가 취소소송 승소',desc:'재개발 조합 설립인가 취소소송에서 승소하여 주민 권익 보호',date:'2024-10'},
+    {id:4,tag:'민사',title:'대여금 반환 청구 전액 승소',desc:'10억원 규모 대여금 반환 청구 소송에서 전액 승소 판결',date:'2024-09'},
+    {id:5,tag:'기업회생',title:'중견기업 회생 인가 결정',desc:'매출 200억 중견 제조업체의 기업회생 인가 결정을 이끌어냄',date:'2024-08'},
+    {id:6,tag:'노동',title:'부당해고 구제 신청 인용',desc:'부당해고 구제신청에서 인용 결정을 받아 근로자 권리 회복',date:'2024-07'}
+  ],
+  members: [
+    {id:1,name:'박민주',title:'대표변호사',field:'기업자문/M&A'},
+    {id:2,name:'김서진',title:'수석변호사',field:'기업회생/파산'},
+    {id:3,name:'이정훈',title:'파트너변호사',field:'형사사건'},
+    {id:4,name:'최은영',title:'파트너변호사',field:'부동산/건설'},
+    {id:5,name:'정대한',title:'시니어변호사',field:'민사소송'},
+    {id:6,name:'한수민',title:'시니어변호사',field:'노동/고용'},
+    {id:7,name:'오재원',title:'변호사',field:'가사/상속'},
+    {id:8,name:'윤지혜',title:'변호사',field:'행정/공법'}
+  ],
+  practice: [
+    {id:1,title:'기업자문',desc:'기업의 설립부터 운영, M&A까지 전 과정 법률 자문'},
+    {id:2,title:'형사사건',desc:'수사 단계부터 재판까지 의뢰인 권리 보호'},
+    {id:3,title:'부동산/건설',desc:'부동산 거래, 개발사업, 건설분쟁 종합 서비스'},
+    {id:4,title:'민사소송',desc:'계약분쟁, 손해배상, 가사사건 등 민사 전 분야'},
+    {id:5,title:'기업회생/파산',desc:'기업회생, 파산, 워크아웃 전문'},
+    {id:6,title:'노동/고용',desc:'노동법 자문, 부당해고, 산업재해 대응'},
+    {id:7,title:'가사/상속',desc:'이혼, 양육권, 상속 및 유류분 분쟁'},
+    {id:8,title:'행정/공법',desc:'행정소송, 인허가, 공공기관 자문'}
+  ],
+  recovery: {
+    stats:{count:'150+',rate:'92%',lawyers:'8',years:'20+'},
+    services:['회생절차 개시 신청','회생계획안 작성','M&A형 회생','간이회생절차','개인회생','파산면책'],
+    faq:[
+      {q:'기업회생 절차는 얼마나 걸리나요?',a:'통상 6개월~1년 정도 소요되며, 간이회생의 경우 3~4개월 내 완료 가능합니다.'},
+      {q:'회생 신청 비용은 얼마인가요?',a:'기업 규모와 사건 복잡도에 따라 다르며, 초기 상담 시 구체적인 비용을 안내해 드립니다.'},
+      {q:'회생 중 영업활동이 가능한가요?',a:'네, 기업회생은 기존 경영진이 영업을 계속하면서 재무구조를 개선하는 절차입니다.'},
+      {q:'채무 조정은 어느 정도 가능한가요?',a:'사안에 따라 다르나, 통상 원금의 50~80% 감면이 가능한 경우가 많습니다.'},
+      {q:'회생 실패 시 어떻게 되나요?',a:'회생 폐지 시 파산절차로 전환될 수 있으며, 이 경우에도 면책 신청이 가능합니다.'}
+    ]
+  },
+  consult: [
+    {id:1,name:'김철수',phone:'010-1234-5678',field:'기업자문',date:'2025-01-20',status:'미확인'},
+    {id:2,name:'이영희',phone:'010-2345-6789',field:'형사사건',date:'2025-01-19',status:'미확인'},
+    {id:3,name:'박지성',phone:'010-3456-7890',field:'기업회생',date:'2025-01-18',status:'확인'},
+    {id:4,name:'최수연',phone:'010-4567-8901',field:'부동산',date:'2025-01-17',status:'확인'},
+    {id:5,name:'정민호',phone:'010-5678-9012',field:'민사소송',date:'2025-01-16',status:'상담완료'},
+    {id:6,name:'한소희',phone:'010-6789-0123',field:'노동',date:'2025-01-15',status:'상담완료'},
+    {id:7,name:'오준석',phone:'010-7890-1234',field:'가사',date:'2025-01-14',status:'미확인'},
+    {id:8,name:'윤채린',phone:'010-8901-2345',field:'행정',date:'2025-01-13',status:'상담완료'}
+  ],
+  settings: {
+    name:'법무법인 민주',
+    phone:'02-555-1234',
+    address:'서울특별시 서초구 서초대로 248 민주빌딩 7층',
+    email:'info@minju.co.kr',
+    navMenus:['소개','업무분야','기업회생센터','구성원','업무사례','상담문의'],
+    footer:'2025 법무법인 민주. All rights reserved.'
+  },
+  hero: {
+    mainCopy:'Your Trust.',
+    subCopy:'Our Commitment. Justice Delivered.',
+    ctaText:'상담 신청하기'
+  }
+};
+
+// ===== NAVIGATION =====
+var currentPage = 'dashboard';
+var pageTitles = {dashboard:'대시보드',hero:'히어로 관리',notices:'공지사항',cases:'업무사례 관리',members:'구성원 관리',practice:'업무분야 관리',recovery:'기업회생 관리',consult:'상담문의 관리',settings:'사이트 설정'};
+
+function navigate(page){
+  currentPage = page;
+  document.getElementById('pageTitle').textContent = pageTitles[page]||page;
+  document.querySelectorAll('.sidebar-item').forEach(function(el){el.classList.toggle('active',el.dataset.page===page)});
+  document.getElementById('sidebar').classList.remove('open');
+  render();
+}
+
+function render(){
+  var c = document.getElementById('content');
+  switch(currentPage){
+    case 'dashboard': c.innerHTML = renderDashboard(); break;
+    case 'hero': c.innerHTML = renderHero(); break;
+    case 'notices': c.innerHTML = renderNotices(); break;
+    case 'cases': c.innerHTML = renderCases(); break;
+    case 'members': c.innerHTML = renderMembers(); break;
+    case 'practice': c.innerHTML = renderPractice(); break;
+    case 'recovery': c.innerHTML = renderRecovery(); break;
+    case 'consult': c.innerHTML = renderConsult(); break;
+    case 'settings': c.innerHTML = renderSettings(); break;
+  }
+}
+
+// ===== MODAL =====
+function openModal(title,bodyHtml,footerHtml){
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = footerHtml||'';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show')}
+
+// ===== RENDER PAGES =====
+function renderDashboard(){
+  var recentConsult = data.consult.slice(0,5);
+  var recentNotice = data.notices.slice(0,3);
+  var h = '<div class="kpi-grid">';
+  h += kpiCard('오늘 방문자','342','명','전일 대비 +12%');
+  h += kpiCard('상담문의','12','건','이번 주 +3건');
+  h += kpiCard('업무사례','6','건','이번 달 등록');
+  h += kpiCard('구성원','25','명','변호사 18명');
+  h += '</div>';
+  h += '<div class="grid-2">';
+  // Recent consult
+  h += '<div class="panel"><div class="panel-head"><span class="panel-title">최근 상담문의</span><button class="btn btn-sm btn-outline" onclick="navigate(\'consult\')">전체보기</button></div>';
+  h += '<table><th>이름</th><th>분야</th><th>날짜</th><th>상태</th>';
+  recentConsult.forEach(function(c){h += '<tr><td>'+c.name+'</td><td>'+c.field+'</td><td>'+c.date+'</td><td>'+statusBadge(c.status)+'</td></tr>'});
+  h += '</table></div>';
+  // Recent notice
+  h += '<div><div class="panel"><div class="panel-head"><span class="panel-title">최근 공지사항</span><button class="btn btn-sm btn-outline" onclick="navigate(\'notices\')">전체보기</button></div>';
+  h += '<table><th>제목</th><th>날짜</th><th>상태</th>';
+  recentNotice.forEach(function(n){h += '<tr><td>'+n.title+'</td><td>'+n.date+'</td><td>'+statusBadge(n.status)+'</td></tr>'});
+  h += '</table></div>';
+  // Chart
+  h += '<div class="panel" style="margin-top:20px"><div class="panel-head"><span class="panel-title">주간 페이지뷰</span></div><div style="padding:16px 20px">';
+  var days = ['월','화','수','목','금','토','일'];
+  var vals = [85,72,90,65,95,40,30];
+  days.forEach(function(d,i){h += '<div class="chart-bar-wrap"><span class="chart-bar-label">'+d+'</span><div class="chart-bar"><div class="chart-bar-fill" style="width:'+vals[i]+'%"></div></div><span style="font-size:11px;color:#999;width:30px">'+Math.round(vals[i]*3.5)+'</span></div>'});
+  h += '</div></div></div>';
+  h += '</div>';
+  return h;
+}
+
+function kpiCard(label,val,unit,sub){
+  return '<div class="kpi-card"><div class="kpi-label">'+label+'</div><div class="kpi-value">'+val+'<span style="font-size:14px;margin-left:2px">'+unit+'</span></div><div class="kpi-sub">'+sub+'</div></div>';
+}
+
+function statusBadge(s){
+  if(s==='게시중') return '<span class="badge badge-green">게시중</span>';
+  if(s==='임시저장') return '<span class="badge badge-gray">임시저장</span>';
+  if(s==='미확인') return '<span class="badge badge-red">미확인</span>';
+  if(s==='확인') return '<span class="badge badge-yellow">확인</span>';
+  if(s==='상담완료') return '<span class="badge badge-green">상담완료</span>';
+  return '<span class="badge badge-gray">'+s+'</span>';
+}
+
+function renderHero(){
+  var h = '<div class="hero-preview">hero-bg.jpg (히어로 이미지)</div>';
+  h += '<div style="margin-bottom:20px"><button class="btn btn-outline" onclick="document.getElementById(\'heroFile\').click()">이미지 변경</button><input type="file" id="heroFile" accept="image/*" style="display:none" onchange="this.previousElementSibling.textContent=\'선택됨: \'+this.files[0].name"></div>';
+  h += '<div class="form-group"><label class="form-label">메인 카피</label><input class="form-input" id="heroMain" value="'+data.hero.mainCopy+'"></div>';
+  h += '<div class="form-group"><label class="form-label">서브 카피</label><input class="form-input" id="heroSub" value="'+data.hero.subCopy+'"></div>';
+  h += '<div class="form-group"><label class="form-label">CTA 텍스트</label><input class="form-input" id="heroCta" value="'+data.hero.ctaText+'"></div>';
+  h += '<button class="btn btn-red" onclick="data.hero.mainCopy=document.getElementById(\'heroMain\').value;data.hero.subCopy=document.getElementById(\'heroSub\').value;data.hero.ctaText=document.getElementById(\'heroCta\').value;alert(\'저장되었습니다.\')">저장</button>';
+  return h;
+}
+
+function renderNotices(){
+  var h = '<div style="margin-bottom:16px;display:flex;justify-content:flex-end"><button class="btn btn-red" onclick="openNoticeModal(-1)">+ 새 공지 작성</button></div>';
+  h += '<div class="panel"><table><th style="width:50px">번호</th><th>제목</th><th style="width:100px">날짜</th><th style="width:80px">상태</th><th style="width:70px">조회수</th>';
+  data.notices.forEach(function(n,i){
+    h += '<tr style="cursor:pointer" onclick="openNoticeModal('+i+')"><td>'+n.id+'</td><td>'+n.title+'</td><td>'+n.date+'</td><td>'+statusBadge(n.status)+'</td><td>'+n.views+'</td></tr>';
+  });
+  h += '</table></div>';
+  return h;
+}
+
+function openNoticeModal(idx){
+  var n = idx>=0 ? data.notices[idx] : {id:data.notices.length+1,title:'',date:new Date().toISOString().slice(0,10),status:'임시저장',views:0,content:''};
+  var isNew = idx<0;
+  var body = '<div class="form-group"><label class="form-label">제목</label><input class="form-input" id="nTitle" value="'+(n.title||'')+'"></div>';
+  body += '<div class="form-group"><label class="form-label">내용</label><textarea class="form-input" id="nContent" rows="6">'+(n.content||'')+'</textarea></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">상태</label><select class="form-input" id="nStatus"><option'+(n.status==='게시중'?' selected':'')+'>게시중</option><option'+(n.status==='임시저장'?' selected':'')+'>임시저장</option></select></div><div class="form-group"><label class="form-label">날짜</label><input class="form-input" type="date" id="nDate" value="'+n.date+'"></div></div>';
+  var footer = '<button class="btn btn-red" onclick="saveNotice('+idx+')">저장</button>';
+  if(!isNew) footer = '<button class="btn btn-outline" style="color:#cc0000;border-color:#cc0000" onclick="deleteNotice('+idx+')">삭제</button>' + footer;
+  openModal(isNew?'새 공지 작성':'공지사항 편집',body,footer);
+}
+
+function saveNotice(idx){
+  var obj = {title:document.getElementById('nTitle').value,content:document.getElementById('nContent').value,status:document.getElementById('nStatus').value,date:document.getElementById('nDate').value};
+  if(idx>=0){Object.assign(data.notices[idx],obj)}
+  else{obj.id=data.notices.length+1;obj.views=0;data.notices.unshift(obj)}
+  closeModal();render();
+}
+function deleteNotice(idx){if(confirm('삭제하시겠습니까?')){data.notices.splice(idx,1);closeModal();render()}}
+
+function renderCases(){
+  var h = '<div style="margin-bottom:16px;display:flex;justify-content:flex-end"><button class="btn btn-red" onclick="openCaseModal(-1)">+ 새 사례 등록</button></div>';
+  h += '<div class="grid-3">';
+  data.cases.forEach(function(c,i){
+    h += '<div class="card" style="cursor:pointer" onclick="openCaseModal('+i+')"><div class="card-tag">'+c.tag+'</div><div class="card-title">'+c.title+'</div><div class="card-desc">'+c.desc+'</div><div class="card-date">'+c.date+'</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function openCaseModal(idx){
+  var c = idx>=0 ? data.cases[idx] : {id:data.cases.length+1,tag:'기업자문',title:'',desc:'',date:new Date().toISOString().slice(0,7)};
+  var isNew = idx<0;
+  var tags = ['기업자문','형사','부동산','민사','기업회생','노동','가사','행정'];
+  var body = '<div class="form-group"><label class="form-label">태그</label><select class="form-input" id="cTag">';
+  tags.forEach(function(t){body+='<option'+(c.tag===t?' selected':'')+'>'+t+'</option>'});
+  body += '</select></div>';
+  body += '<div class="form-group"><label class="form-label">제목</label><input class="form-input" id="cTitle" value="'+(c.title||'')+'"></div>';
+  body += '<div class="form-group"><label class="form-label">내용</label><textarea class="form-input" id="cDesc" rows="4">'+(c.desc||'')+'</textarea></div>';
+  body += '<div class="form-row"><div class="form-group"><label class="form-label">이미지</label><input type="file" class="form-input" accept="image/*" style="padding:8px"></div>';
+  body += '<div class="form-group"><label class="form-label">날짜</label><input class="form-input" type="month" id="cDate" value="'+c.date+'"></div></div>';
+  var footer = '<button class="btn btn-red" onclick="saveCase('+idx+')">저장</button>';
+  if(!isNew) footer = '<button class="btn btn-outline" style="color:#cc0000;border-color:#cc0000" onclick="deleteCase('+idx+')">삭제</button>'+footer;
+  openModal(isNew?'새 사례 등록':'업무사례 편집',body,footer);
+}
+
+function saveCase(idx){
+  var obj={tag:document.getElementById('cTag').value,title:document.getElementById('cTitle').value,desc:document.getElementById('cDesc').value,date:document.getElementById('cDate').value};
+  if(idx>=0){Object.assign(data.cases[idx],obj)}else{obj.id=data.cases.length+1;data.cases.unshift(obj)}
+  closeModal();render();
+}
+function deleteCase(idx){if(confirm('삭제하시겠습니까?')){data.cases.splice(idx,1);closeModal();render()}}
+
+function renderMembers(){
+  var h = '<div style="margin-bottom:16px;display:flex;justify-content:flex-end"><button class="btn btn-red" onclick="openMemberModal(-1)">+ 새 구성원 추가</button></div>';
+  h += '<div class="grid-4">';
+  data.members.forEach(function(m,i){
+    h += '<div class="card member-card" style="cursor:pointer" onclick="openMemberModal('+i+')"><div class="member-photo">'+m.name.charAt(0)+'</div><div class="member-name">'+m.name+'</div><div class="member-title">'+m.title+'</div><div class="member-field">'+m.field+'</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function openMemberModal(idx){
+  var m = idx>=0 ? data.members[idx] : {id:data.members.length+1,name:'',title:'',field:''};
+  var isNew = idx<0;
+  var body = '<div class="form-group"><label class="form-label">이름</label><input class="form-input" id="mName" value="'+(m.name||'')+'"></div>';
+  body += '<div class="form-group"><label class="form-label">직위</label><input class="form-input" id="mTitle" value="'+(m.title||'')+'"></div>';
+  body += '<div class="form-group"><label class="form-label">전문분야</label><input class="form-input" id="mField" value="'+(m.field||'')+'"></div>';
+  body += '<div class="form-group"><label class="form-label">프로필 사진</label><input type="file" class="form-input" accept="image/*" style="padding:8px"></div>';
+  var footer = '<button class="btn btn-red" onclick="saveMember('+idx+')">저장</button>';
+  if(!isNew) footer = '<button class="btn btn-outline" style="color:#cc0000;border-color:#cc0000" onclick="deleteMember('+idx+')">삭제</button>'+footer;
+  openModal(isNew?'새 구성원 추가':'구성원 편집',body,footer);
+}
+
+function saveMember(idx){
+  var obj={name:document.getElementById('mName').value,title:document.getElementById('mTitle').value,field:document.getElementById('mField').value};
+  if(idx>=0){Object.assign(data.members[idx],obj)}else{obj.id=data.members.length+1;data.members.push(obj)}
+  closeModal();render();
+}
+function deleteMember(idx){if(confirm('삭제하시겠습니까?')){data.members.splice(idx,1);closeModal();render()}}
+
+function renderPractice(){
+  var h = '<div class="panel">';
+  data.practice.forEach(function(p,i){
+    h += '<div class="list-item"><div class="list-num">'+(i+1)+'</div><div class="list-body"><h4>'+p.title+'</h4><p>'+p.desc+'</p></div><div class="list-actions">';
+    h += '<button class="arrow-btn" onclick="event.stopPropagation();movePractice('+i+',-1)" '+(i===0?'disabled style="opacity:.3"':'')+'>&#9650;</button>';
+    h += '<button class="arrow-btn" onclick="event.stopPropagation();movePractice('+i+',1)" '+(i===data.practice.length-1?'disabled style="opacity:.3"':'')+'>&#9660;</button>';
+    h += '<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();openPracticeModal('+i+')">편집</button>';
+    h += '</div></div>';
+  });
+  h += '</div>';
+  return h;
+}
+
+function movePractice(idx,dir){
+  var t=idx+dir;if(t<0||t>=data.practice.length)return;
+  var tmp=data.practice[idx];data.practice[idx]=data.practice[t];data.practice[t]=tmp;
+  render();
+}
+
+function openPracticeModal(idx){
+  var p=data.practice[idx];
+  var body='<div class="form-group"><label class="form-label">제목</label><input class="form-input" id="pTitle" value="'+p.title+'"></div>';
+  body+='<div class="form-group"><label class="form-label">설명</label><textarea class="form-input" id="pDesc" rows="3">'+p.desc+'</textarea></div>';
+  var footer='<button class="btn btn-red" onclick="savePractice('+idx+')">저장</button>';
+  openModal('업무분야 편집',body,footer);
+}
+
+function savePractice(idx){
+  data.practice[idx].title=document.getElementById('pTitle').value;
+  data.practice[idx].desc=document.getElementById('pDesc').value;
+  closeModal();render();
+}
+
+function renderRecovery(){
+  var r=data.recovery;
+  var h='<div class="panel"><div class="panel-head"><span class="panel-title">실적 수치</span></div><div style="padding:20px">';
+  h+='<div class="form-row"><div class="form-group"><label class="form-label">수행건수</label><input class="form-input" id="rCount" value="'+r.stats.count+'"></div>';
+  h+='<div class="form-group"><label class="form-label">성공률</label><input class="form-input" id="rRate" value="'+r.stats.rate+'"></div></div>';
+  h+='<div class="form-row"><div class="form-group"><label class="form-label">전담변호사</label><input class="form-input" id="rLawyers" value="'+r.stats.lawyers+'"></div>';
+  h+='<div class="form-group"><label class="form-label">경력</label><input class="form-input" id="rYears" value="'+r.stats.years+'"></div></div>';
+  h+='<button class="btn btn-red" onclick="data.recovery.stats={count:document.getElementById(\'rCount\').value,rate:document.getElementById(\'rRate\').value,lawyers:document.getElementById(\'rLawyers\').value,years:document.getElementById(\'rYears\').value};alert(\'저장되었습니다.\')">저장</button>';
+  h+='</div></div>';
+
+  h+='<div class="panel" style="margin-top:20px"><div class="panel-head"><span class="panel-title">서비스 항목</span></div><div style="padding:20px">';
+  r.services.forEach(function(s,i){
+    h+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="form-input" value="'+s+'" onchange="data.recovery.services['+i+']=this.value" style="flex:1"></div>';
+  });
+  h+='</div></div>';
+
+  h+='<div class="panel" style="margin-top:20px"><div class="panel-head"><span class="panel-title">FAQ</span></div><div style="padding:20px">';
+  r.faq.forEach(function(f,i){
+    h+='<div class="faq-item'+(i===0?' open':'')+'"><div class="faq-head" onclick="this.parentElement.classList.toggle(\'open\')"><span>Q. '+f.q+'</span><span style="color:#999;font-size:16px">&#9662;</span></div>';
+    h+='<div class="faq-body"><div class="form-group"><label class="form-label">질문</label><input class="form-input" value="'+f.q+'" onchange="data.recovery.faq['+i+'].q=this.value"></div>';
+    h+='<div class="form-group"><label class="form-label">답변</label><textarea class="form-input" rows="3" onchange="data.recovery.faq['+i+'].a=this.value">'+f.a+'</textarea></div></div></div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
+function renderConsult(){
+  var h='<div class="panel"><div class="panel-head"><span class="panel-title">상담문의 접수 현황</span><div style="display:flex;gap:8px"><span class="badge badge-red" style="cursor:pointer">미확인 '+data.consult.filter(function(c){return c.status==='미확인'}).length+'</span></div></div>';
+  h+='<table><th>이름</th><th>연락처</th><th>분야</th><th>날짜</th><th>상태</th><th style="width:120px">변경</th>';
+  data.consult.forEach(function(c,i){
+    var states=['미확인','확인','상담완료'];
+    var nextIdx=states.indexOf(c.status);
+    var nextState=nextIdx<2?states[nextIdx+1]:null;
+    h+='<tr><td>'+c.name+'</td><td>'+c.phone+'</td><td>'+c.field+'</td><td>'+c.date+'</td><td>'+statusBadge(c.status)+'</td>';
+    h+='<td>'+(nextState?'<button class="btn btn-sm btn-outline" onclick="changeConsultStatus('+i+',\''+nextState+'\')">'+nextState+'</button>':'<span style="color:#999;font-size:12px">완료</span>')+'</td></tr>';
+  });
+  h+='</table></div>';
+  return h;
+}
+
+function changeConsultStatus(idx,status){data.consult[idx].status=status;render()}
+
+function renderSettings(){
+  var s=data.settings;
+  var h='<div class="grid-2">';
+  h+='<div class="panel"><div class="panel-head"><span class="panel-title">기본 정보</span></div><div style="padding:20px">';
+  h+='<div class="form-group"><label class="form-label">법인명</label><input class="form-input" id="sName" value="'+s.name+'"></div>';
+  h+='<div class="form-group"><label class="form-label">전화번호</label><input class="form-input" id="sPhone" value="'+s.phone+'"></div>';
+  h+='<div class="form-group"><label class="form-label">주소</label><input class="form-input" id="sAddr" value="'+s.address+'"></div>';
+  h+='<div class="form-group"><label class="form-label">이메일</label><input class="form-input" id="sEmail" value="'+s.email+'"></div>';
+  h+='<button class="btn btn-red" onclick="data.settings.name=document.getElementById(\'sName\').value;data.settings.phone=document.getElementById(\'sPhone\').value;data.settings.address=document.getElementById(\'sAddr\').value;data.settings.email=document.getElementById(\'sEmail\').value;alert(\'저장되었습니다.\')">저장</button>';
+  h+='</div></div>';
+
+  h+='<div><div class="panel"><div class="panel-head"><span class="panel-title">네비게이션 메뉴</span></div><div style="padding:20px">';
+  s.navMenus.forEach(function(m,i){
+    h+='<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">';
+    h+='<span style="width:24px;text-align:center;color:#999;font-size:12px">'+(i+1)+'</span>';
+    h+='<input class="form-input" value="'+m+'" onchange="data.settings.navMenus['+i+']=this.value" style="flex:1">';
+    h+='<button class="arrow-btn" onclick="moveNav('+i+',-1)" '+(i===0?'disabled style="opacity:.3"':'')+'>&#9650;</button>';
+    h+='<button class="arrow-btn" onclick="moveNav('+i+',1)" '+(i===s.navMenus.length-1?'disabled style="opacity:.3"':'')+'>&#9660;</button>';
+    h+='</div>';
+  });
+  h+='</div></div>';
+
+  h+='<div class="panel" style="margin-top:20px"><div class="panel-head"><span class="panel-title">푸터 텍스트</span></div><div style="padding:20px">';
+  h+='<div class="form-group"><textarea class="form-input" id="sFooter" rows="3">'+s.footer+'</textarea></div>';
+  h+='<button class="btn btn-red" onclick="data.settings.footer=document.getElementById(\'sFooter\').value;alert(\'저장되었습니다.\')">저장</button>';
+  h+='</div></div></div>';
+  h+='</div>';
+  return h;
+}
+
+function moveNav(idx,dir){
+  var t=idx+dir;if(t<0||t>=data.settings.navMenus.length)return;
+  var tmp=data.settings.navMenus[idx];data.settings.navMenus[idx]=data.settings.navMenus[t];data.settings.navMenus[t]=tmp;
+  render();
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
